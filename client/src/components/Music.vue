@@ -1,24 +1,19 @@
 <template>
-  <div class="music">
-    随心听
-  </div>
+	<div class="music">随心听</div>
 </template>
 
 <script>
 export default {
-  name: 'music',
-  data () {
-    return {
-      onoff:false
-    }
-  },
-  methods:{
-    
-  }
-}
+	name: "music",
+	data() {
+		return {
+		onoff: false
+		};
+	},
+	methods: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

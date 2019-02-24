@@ -1,0 +1,1 @@
+# 启动express项目 set DEBUG=myapp:* & npm start
