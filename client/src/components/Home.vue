@@ -1,18 +1,18 @@
 <template>
     <div class="home">
         <!-- 轮播图 -->
-        <Carousel autoplay v-model="focusFirst" loop>
+        <Carousel autoplay v-model="focusFirst" loop style="height:135px;">
             <CarouselItem v-for="(item,index) in focus" :key="index">
                 <img :src="item.randpic" alt="" style="width:100%">
             </CarouselItem>
         </Carousel>
         <!-- 导航 -->
-        <Row class="pt-3">
+        <Row class="pt-3" style="height:50px;">
             <Col :span="4" v-for="(item,index) in mix_116" :key="index" class="ml-2">
                 <img :src="item.pic" alt="" style="width:60%;">
             </Col>
         </Row>
-        <Row class="pb-2">
+        <Row class="pb-2" style="26px;">
             <Col
                 :span="4"
                 v-for="(item,index) in mix_116"
@@ -25,15 +25,15 @@
             <Col :span="16" :offset="4">精选歌单</Col>
             <Col :span="4">更多</Col>
         </Row>
-        <Row>
-            <Col :span="8" v-for="(item,index) in diy" :key="index">
+        <Row style="height:240px;">
+            <Col :span="8" v-for="(item,index) in diy" :key="index" style="height:120px;">
                 <Row>
                     <Col :span="24">
                         <img :src="item.pic" alt="" style="width:85%;">
                     </Col>
                 </Row>
                 <Row>
-                    <Col :span="24" class="font-12">{{item.title}}</Col>
+                    <Col :span="24" class="font-12">{{item.title.length>6?item.title.substr(0,6)+'...':item.title}}</Col>
                 </Row>
             </Col>
         </Row>
@@ -43,14 +43,14 @@
             <Col :span="4">更多</Col>
         </Row>
         <Row>
-            <Col :span="8" v-for="(item,index) in mix_1" :key="index">
+            <Col :span="8" v-for="(item,index) in mix_1" :key="index" style="height:120px;">
                 <Row>
                     <Col :span="24">
                         <img :src="item.pic" alt="" style="width:90%;">
                     </Col>
                 </Row>
                 <Row>
-                    <Col :span="24" class="font-12">{{item.title}}</Col>
+                    <Col :span="24" class="font-12">{{item.title.length>6?item.title.substr(0,6)+'...':item.title}}</Col>
                 </Row>
             </Col>
         </Row>
@@ -59,7 +59,7 @@
             <Col :span="16" :offset="4">今日推荐歌曲</Col>
             <Col :span="4">更多</Col>
         </Row>
-        <Row v-for="(item,index) in mix_118" :key="index" class="pt-1 font-12">
+        <Row v-for="(item,index) in mix_118" :key="index" class="pt-1 font-12" style="height:120px;">
             <Col :span="6">
                 <img :src="item.pic_premium" alt="" style="width:100%;">
             </Col>
@@ -85,14 +85,14 @@
             <Col :span="4">更多</Col>
         </Row>
         <Row>
-            <Col :span="8" v-for="(item,index) in mix_83" :key="index">
+            <Col :span="8" v-for="(item,index) in mix_83" :key="index" style="height:140px;">
                 <Row>
                     <Col :span="24">
                         <img :src="item.pic" alt="" style="width:90%;">
                     </Col>
                 </Row>
                 <Row>
-                    <Col :span="24" class="font-12 font-bold">{{item.title}}</Col>
+                    <Col :span="24" class="font-12 font-bold">{{item.title.length>6?item.title.substr(0,6)+'...':item.title}}</Col>
                 </Row>
                 <Row>
                     <Col :span="24" class="font-12">{{item.desc}}</Col>
@@ -105,17 +105,17 @@
             <Col :span="4">更多</Col>
         </Row>
         <Row>
-            <Col :span="8" v-for="(item,index) in mix_22" :key="index">
+            <Col :span="8" v-for="(item,index) in mix_22" :key="index"  style="height:140px;">
                 <Row>
                     <Col :span="24">
                         <img :src="item.pic" alt="" style="width:90%;">
                     </Col>
                 </Row>
                 <Row>
-                    <Col :span="24" class="font-12 font-bold">{{item.title}}</Col>
+                    <Col :span="24" class="font-12 font-bold">{{item.title.length>6?item.title.substr(0,6)+'...':item.title}}</Col>
                 </Row>
                 <Row>
-                    <Col :span="24" class="font-12">{{item.desc}}</Col>
+                    <Col :span="24" class="font-12">{{item.desc.length>6?item.desc.substr(0,6)+'...':item.desc}}</Col>
                 </Row>
             </Col>
         </Row>

@@ -1,5 +1,5 @@
 <template>
-	<div class="recommend">
+	<div class="recommend" style="width:100%;">
 		<div class="m-2 pt-2 font-12" v-for="(item,index) in songSheet">
 			<template v-if="item.feed_type == 1">
 				<!-- <Row :style="{backgroundImage:'url('+item.content.pic_special+')',filter:'blur(10px)'}"> -->
@@ -38,11 +38,19 @@
 					</Col>
 				</Row>
 			</template>
+			<template v-if="item.feed_type == 21">
+				<Row>
+					<Col span="24">{{item.content.title}}</Col>
+					<Col span="24">
+						<video :src="item.content.url" controls="controls"></video>
+					</Col>
+				</Row>
+			</template>
 			<template v-if="item.feed_type == 22">
 				<Row>
 					<Col span="24">{{item.content.title}}</Col>
 					<Col span="24">
-						<video :src=this.api+"item.content.url" controls="controls"></video>
+						<video :src="item.content.url" controls="controls"></video>
 					</Col>
 				</Row>
 			</template>

@@ -1,7 +1,7 @@
 <template>
 	<div class="videoPlayer">
 		<!-- 轮播图 -->
-		<Carousel autoplay v-model="focusFirst" loop>
+		<Carousel autoplay v-model="focusFirst" loop style="height:135px;">
 			<CarouselItem v-for="(item,index) in focus" :key="index">
 				<img :src="item.pic_url" alt="" style="width:100%">
 			</CarouselItem>
@@ -28,7 +28,7 @@
 					<Col :span="24"><img :src="item.pic_url" alt="" style="width:85%;height:76px;"></Col>
 				</Row>
 				<Row>
-					<Col :span="24" class="font-12"><p class="float-left ml-3">{{item.con_title.substr(0,9)}}</p></Col>
+					<Col :span="24" class="font-12"><p class="float-left ml-3">{{item.con_title.lenght>6?item.con_title:item.con_title.substr(0,6)+'...'}}</p></Col>
 					<Col :span="24" class="font-12"><p class="float-left ml-3">{{item.author}}</p></Col>
 				</Row>
 			</Col>
