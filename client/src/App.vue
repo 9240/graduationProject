@@ -1,19 +1,13 @@
 <template>
   <div id="app">
-    <HelloWorld />
-    <router-view class="mt-5 pb-5" />
     <router-view name="nav"/>
+    <router-view class="pb-5"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld'
-import Home from '@/components/Home'
 export default {
-  name: 'App',
-  components:{
-    HelloWorld
-  }
+    name:'App'
 }
 </script>
 
@@ -24,5 +18,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 56px;
 }
 </style>

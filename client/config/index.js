@@ -11,24 +11,23 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api":{
-        //target:"http://9240.fun:3000",
-		target:"http://localhost:3000",
-        "secure":false,
+      "/proxy/":{
+        target:"https://c.y.qq.com",
+        "secure":true,
         "changeOrigin":true,
         "pathRewrite":{
-          "^/api":""
+          "^/proxy":""
         },
         "headers":{
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
         }
       },
-      "/baidu":{
-        target:"http://musicapi.qianqian.com",
+      "/bzq/":{
+        target:"https://api.bzqll.com",
         "secure":true,
         "changeOrigin":true,
         "pathRewrite":{
-          "^/baidu":""
+          "^/bzq":""
         },
         "headers":{
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
