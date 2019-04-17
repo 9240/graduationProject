@@ -22,6 +22,17 @@ module.exports = {
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
         }
       },
+      "/local/":{
+        target:"http://localhost:3000",
+        "secure":false,
+        "changeOrigin":true,
+        "pathRewrite":{
+          "^/local":""
+        },
+        "headers":{
+          "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
+        }
+      },
       "/bzq/":{
         target:"https://api.bzqll.com",
         "secure":true,

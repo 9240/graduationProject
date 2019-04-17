@@ -5,7 +5,7 @@
                 <Icon type="md-menu" class="pl-2 h6"/>
             </div>
             <!-- 左侧返回 -->
-			<Drawer :closable="false" width="50" v-model="onoff" placement="left">
+			<Drawer :closable="false" width="60" v-model="onoff" placement="left">
 				<Row class="mt-5">
 					<Col span="8">
 						<Avatar style="background-color: #87d068" icon="ios-person"/>
