@@ -47,7 +47,7 @@ export default {
           if(!this.userInfo.username || !this.userInfo.password){
               this.$Message.info('请完善信息');
           }else{
-              axios.post(this.api+"http://www.9240.fun:3000/usermsg/login",{
+              axios.post("/local/usermsg/login",{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })
@@ -92,7 +92,7 @@ export default {
                 content:'密码长度要大于6',
             })
         }else{
-            axios.post(this.api+'http://www.9240.fun:3000/usermsg/register',{
+            axios.post('/local/usermsg/register',{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })
@@ -122,5 +122,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .loginRegister{
+        text-align: center;
+    }
 </style>

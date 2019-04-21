@@ -26,10 +26,11 @@
         </div>
         <h6 class="p-2">热门歌单</h6>
         <div class="d-grid">
-            <div v-for="(item,index) in songList" :key="index">
-                <img :src="item.picUrl" alt="" class="p-1">
-                <!-- <small>{{item.songListDesc}}</small>
-                <small class="text-left">{{item.songListAuthor}}</small> -->
+            <div v-for="(item,index) in songList.slice(1,6)" :key="index" class="p-1">
+                <router-link :to="'/hotsongsheet/'+index">
+                    <img :src="item.picUrl" alt="">
+                    <small>{{item.songListDesc}}</small>
+                </router-link>
             </div>
         </div>
     </div>
@@ -68,7 +69,6 @@ export default {
 <style scoped>
 .d-grid img{
     width: 100%;
-    height:100%;
 }
 .d-grid{
     display:grid;
@@ -79,5 +79,8 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+#recommend{
+    /* text-align: center; */
 }
 </style>

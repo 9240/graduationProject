@@ -43,6 +43,17 @@ module.exports = {
         "headers":{
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
         }
+      },
+      "/uqq/":{
+        target:"https://u.y.qq.com",
+        "secure":true,
+        "changeOrigin":true,
+        "pathRewrite":{
+          "^/uqq":""
+        },
+        "headers":{
+          "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
+        }
       }
     },
 

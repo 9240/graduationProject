@@ -116,4 +116,7 @@ ul li{
     margin-left: 70px;
     list-style: none;
 }
+#rank{
+    text-align: center;
+}
 </style>

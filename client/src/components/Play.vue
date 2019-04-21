@@ -116,4 +116,7 @@ export default {
         color:red;
         /* font-size:18px; */
     }
+    #play{
+        text-align: center;
+    }
 </style>

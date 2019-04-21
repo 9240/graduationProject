@@ -100,4 +100,7 @@ export default {
     .iconfont{
         font-size: 20px;
     }
+    #navbar{
+        text-align: center;
+    }
 </style>

@@ -35,5 +35,7 @@ export default {
 </script>
 
 <style scoped>
-
+#singlerank{
+    text-align: center;
+}
 </style>

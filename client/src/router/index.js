@@ -8,6 +8,7 @@ import SingleRank from '@/components/SingleRank'
 import Play from '@/components/Play'
 import Mine from '@/components/Mine'
 import LoginRegister from '@/components/LoginRegister'
+import HotSongSheet from '@/components/HotSongSheet'
 Vue.use(Router)
 
 export default new Router({
@@ -37,7 +38,7 @@ export default new Router({
       }
     },
     {
-      path:'/singlerank',
+      path:'/singlerank/:url',
       name:'singlerank',
       components:{
         nav:NavBar,
@@ -66,6 +67,14 @@ export default new Router({
       components:{
         nav:NavBar,
         default:LoginRegister
+      }
+    },
+    {
+      path:'/hotsongsheet/:id',
+      name:'hotsongsheet',
+      components:{
+        nav:NavBar,
+        default:HotSongSheet
       }
     }
   ]

@@ -2,11 +2,11 @@
     <div id="search">
         <div class="container">
             <input type="text" class="form-control mt-2" placeholder="搜索歌曲" v-model="search" v-on:input="searchsong" v-on:click="recommend">
-            <table class="table table-striped" v-show="search==''">
+            <table class="table table-striped text-primary" v-show="search==''">
                 <tbody>
                     <tr v-for="(item,index) in hotkey" :key="index" v-on:click='up(item.k)'>
-                        <td class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.k}}</td>
-                        <td class="float-right">{{item.n/10000}}万</td>
+                        <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.k}}</td>
+                        <td class="float-right border-0">{{item.n/10000}}万</td>
                     </tr>
                 </tbody>
             </table>
@@ -14,8 +14,8 @@
                 <tbody>
                     <tr v-for="(item,index) in song" :key="index">
                         <router-link :to="{name:'play',params:{songmid:item.songmid,songname:item.songname,index:index}}">
-                            <td class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname}}</td>
-                            <td class="float-right">{{item.singer[0].name}}</td>
+                            <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname.slice(0,6)}}</td>
+                            <td class="float-right border-0">{{item.singer[0].name.slice(0.6)}}</td>
                         </router-link>
                     </tr>
                 </tbody>
@@ -39,7 +39,7 @@ export default {
     },
     created(){
         axios("http://www.9240.fun:3000/usermsg/all").then(data=>{
-		console.log(data);
+		    console.log(data);
 	    })
     },
     methods:{
@@ -67,5 +67,6 @@ export default {
 <style scoped>
     #search{
         margin-top:70px;
+        text-align: center;
     }
 </style>
