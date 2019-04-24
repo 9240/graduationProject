@@ -38,9 +38,7 @@ export default {
         }
     },
     created(){
-        axios("http://www.9240.fun:3000/usermsg/all").then(data=>{
-		    console.log(data);
-	    })
+
     },
     methods:{
         recommend(){

@@ -1,8 +1,8 @@
 <template>
     <div id="navbar" class="container">
         <div class="row fixed-top bg-primary p-3">
-            <div class="col-2" v-on:click="showmsg">
-                <Icon type="md-menu" class="pl-2 h6"/>
+            <div class="col-2" v-on:click="leftIcon">
+                <Icon :type="$store.state.leftIcon" class="pl-2 h6" ref="icon"/>
             </div>
             <!-- 左侧返回 -->
 			<Drawer :closable="false" width="60" v-model="onoff" placement="left">
@@ -49,8 +49,13 @@
                         <div class="col-12"><Icon type="ios-thumbs-up" class="iconfont"/></div>
                     </div>
                     <div class="row">
-                        <div class="col-12">排行榜</div>
+                        <div class="col-12">排行</div>
                     </div>
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/play" exact style="">
+                    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2097124721,3074829049&fm=27&gp=0.jpg" alt="" style="width:40px;height:40px;border-radius:50%">
                 </router-link>
             </li>
             <li class="nav-item">
@@ -87,9 +92,13 @@ export default {
         }
     },
     methods:{
-        showmsg() {
-			this.onoff = !this.onoff;
-		},
+        leftIcon(){
+            if(this.$refs.icon.type == "md-menu"){
+                this.onoff = !this.onoff;
+            }else if(this.$refs.icon.type == "ios-arrow-back"){
+                this.$router.go(-1)
+            }
+        }
     }
 }
 </script>
@@ -104,3 +113,9 @@ export default {
         text-align: center;
     }
 </style>
+<!--
+
+<Icon type="ios-pause" />
+<Icon type="ios-play" />
+
+-->

@@ -22,7 +22,6 @@
     if (!first) {
       first = new Date().getTime();
       mui.toast('再按一次退出应用');
-      history.go(-1)
       setTimeout(function () {
         first = null;
       }, 1000);

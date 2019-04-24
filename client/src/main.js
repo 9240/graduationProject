@@ -11,6 +11,15 @@ import 'iview/dist/styles/iview.css';
 Vue.config.productionTip = false
 Vue.use(iView);
 /* eslint-disable no-new */
+router.beforeEach((to, from, next) => {
+  // to and from are both route objects. must call `next`.
+  if(to.path == '/' || to.path == '/rank' || to.path == '/search' || to.path == '/Mine'){
+    store.state.leftIcon = 'md-menu'
+  }else{
+    store.state.leftIcon = 'ios-arrow-back'
+  }
+  next()
+})
 new Vue({
   el: '#app',
   router,

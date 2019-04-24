@@ -80,7 +80,4 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#recommend{
-    /* text-align: center; */
-}
 </style>

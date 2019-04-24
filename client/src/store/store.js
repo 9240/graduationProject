@@ -7,7 +7,16 @@ export const store = new Vuex.Store({
             username:"",
             password:"",
             repassword:""
-        }
+        },
+        songmsg:{
+            name:"",
+            singer:"",
+            lrc:"",
+            pic:"",
+            playState:null,
+            isMini:null
+        },
+        leftIcon:"md-menu"
     },
     mutations:{
         userInfoG(state,payload){

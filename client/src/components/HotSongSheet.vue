@@ -2,7 +2,7 @@
     <div>
         <Card :title="'歌单  共'+songlist.length+'首'" icon="md-headset" :padding="0" >
             <CellGroup>
-                <div v-for="(item,index) in songlist">
+                <div v-for="(item,index) in songlist" :key="index">
                     <router-link :to="{name:'play',params:{songmid:item.mid,songname:item.name,index:index}}">
                         <Cell :title="item.name" :label="item.album.name" />
                     </router-link>

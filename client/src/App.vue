@@ -1,23 +1,24 @@
 <template>
-  <div id="app">
-    <router-view name="nav"/>
-    <router-view class="pb-5"/>
-  </div>
+    <div id="app">
+        <router-view name="nav"/>
+        <!-- <keep-alive> -->
+            <router-view class="pb-5"/>
+        <!-- </keep-alive> -->
+    </div>
 </template>
 
 <script>
-export default {
-    name:'App'
-}
+    export default {
+        name: "App"
+    };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  margin-top: 56px;
-}
+    #app {
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #2c3e50;
+        margin-top: 56px;
+    }
 </style>

@@ -49,7 +49,7 @@ export default new Router({
       path:'/play',
       name:'play',
       components:{
-        nav:NavBar,
+        // nav:NavBar,
         default:Play
       }
     },

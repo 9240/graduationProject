@@ -1,7 +1,7 @@
 <template>
 	<div class="mine">
 		<template v-if="!userInfo.name&&!userInfo.password">
-			<h5 class="pt-5">你还没有登陆 <router-link to='/LoginRegister'>去登陆</router-link></span></h5>
+			<h5 class="pt-5">你还没有登陆 <router-link to='/LoginRegister'>去登陆</router-link></h5>
 		</template>
 		<template v-else>
 			<h5>欢迎使用</h5>
