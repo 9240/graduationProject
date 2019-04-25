@@ -1,16 +1,22 @@
 <template>
     <div id="app">
-        <router-view name="nav"/>
-        <!-- <keep-alive> -->
+        <keep-alive>
+            <router-view name="nav"/>
+        </keep-alive>
+        <keep-alive include="recommend,rank">
             <router-view class="pb-5"/>
-        <!-- </keep-alive> -->
+        </keep-alive>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "App"
-    };
+import play from './components/Play.vue'
+export default {
+    name: "App",
+    components:{
+        play
+    },
+};
 </script>
 
 <style>

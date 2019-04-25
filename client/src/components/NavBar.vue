@@ -5,12 +5,11 @@
                 <Icon :type="$store.state.leftIcon" class="pl-2 h6" ref="icon"/>
             </div>
             <!-- 左侧返回 -->
-			<Drawer :closable="false" width="60" v-model="onoff" placement="left">
+			<Drawer :closable="false" width="60" v-model="leftonoff" placement="left">
 				<Row class="mt-5">
 					<Col span="8">
 						<Avatar style="background-color: #87d068" icon="ios-person"/>
 					</Col>
-					<!-- <Col span="16" class="mt-2">{{$store.state.userInfo.username?$store.state.userInfo.username:"你还没有登陆"}}</Col> -->
 					<Col span="16" class="mt-2">{{$store.getters.getLoginUserName}}</Col>
 				</Row>
 				<Divider/>
@@ -33,7 +32,7 @@
             </div>
         </div>
         <ul class="nav nav-tabs justify-content-around fixed-bottom bg-light p-2">
-            <li class="nav-item">
+            <li class="nav-item"  v-show="this.$store.state.IsMini">
                 <router-link to="/" exact>
                     <div class="row">
                         <div class="col-12"><Icon type="ios-star" class="iconfont" /></div>
@@ -43,7 +42,7 @@
                     </div>
                 </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item"  v-show="this.$store.state.IsMini">
                 <router-link to="/rank" exact>
                     <div class="row">
                         <div class="col-12"><Icon type="ios-thumbs-up" class="iconfont"/></div>
@@ -53,12 +52,49 @@
                     </div>
                 </router-link>
             </li>
-            <li class="nav-item">
-                <router-link to="/play" exact style="">
-                    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2097124721,3074829049&fm=27&gp=0.jpg" alt="" style="width:40px;height:40px;border-radius:50%">
-                </router-link>
+            <li class="nav-item" :class="{active:!this.$store.state.IsMini}">
+                <audio :src="'/bzq/music/tencent/url?key=579621905&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
+                <div v-show="this.$store.state.IsMini"  @click="changeIsMini(false)">
+                    <i-circle :percent="percent" stroke-color="#fff700e6" trail-color="#444" :size="45">
+                        <img alt="" :src="songInfo.picurl" class="rounded-circle" v-if="songInfo.picid" style="width:40px;height:40px" ref="picmini">
+                        <img src="http://www.kugou.com/yy/static/images/play/default.jpg" alt="" style="width:40px;height:40px" class="rounded-circle" v-if="!songInfo.picid" ref="picmininull">
+                    </i-circle>
+                </div>
+                <div v-show="!this.$store.state.IsMini">
+                    <div id="play" style="height:70vh;">
+                        <div class="row fixed-top p-3">
+                            <div class="col-2">
+                                <Icon type="ios-arrow-down" class="pl-2 h4" @click="changeIsMini(true)"/>
+                            </div>
+                        </div>
+                        <div style="position:absolute;top:0;left:0;width:100vw;height:70vh;z-index:-1;">
+                            <img src="http://www.kugou.com/yy/static/images/play/default.jpg" alt="" style="width:100vw;height:100vh;filter:blur(20px)" v-if="!songInfo.picurl" ref="picnull">
+                            <img :src="songInfo.picurl" alt="" style="width:100vw;height:100vh;filter:blur(20px)" v-else>
+                        </div>
+                        <h4 class="songname mt-90">{{songInfo.songname}}</h4>
+                        <p class="songname">{{songInfo.singername}}</p>
+                        <img alt="" :src="songInfo.picurl" class="rounded-circle mt-2" v-if="songInfo.picid" style="width:240px;height:240px" ref="pic">
+                        <ul class="list-group" ref="lrc">
+                            <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" style="border:0;position:absolute;top:400px;left:0px;background-color:rgba(0,0,0,0);width:100vw;">
+                                <p v-if="((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)<=1&&((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)>=-1" :class="{isRed:(item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1)==currentTime?true:false}" style="color:red;z-index:999;" class="text-center">{{item.split(']')[1]}}</p>
+                            </li>
+                        </ul>
+                        <img src="http://www.kugou.com/yy/static/images/play/default.jpg" alt="" style="width:240px;height:240px" class="rounded-circle mt-2" v-if="!songInfo.picid">
+                        <h2 v-show="!songInfo.songmid">抱歉,你找的歌曲不存在</h2>
+                        <div class="icon">
+                            <Row>
+                                <Col :span="12">
+                                    <Icon :type="onoff?'ios-pause':'ios-play'" class="fonticon" v-on:click="isPlay" ref="songState"/>
+                                </Col>
+                                <Col :span="12">
+                                    <Icon type="md-arrow-down" class="fonticon"/>
+                                </Col>
+                            </Row>
+                        </div>
+                    </div>
+                </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item"  v-show="this.$store.state.IsMini">
                 <router-link to="/search" exact>
                     <div class="row">
                         <div class="col-12"><Icon type="md-search" class="iconfont"/></div>
@@ -68,7 +104,7 @@
                     </div>
                 </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item"  v-show="this.$store.state.IsMini">
                 <router-link to="/Mine" exact>
                     <div class="row">
                         <div class="col-12"><Icon type="ios-contact" class="iconfont" /></div>
@@ -83,22 +119,66 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name:'navbar',
     data(){
         return{
-            onoff: false,
-			isShowNav:true
+            leftonoff: false,
+            isShowNav:true,
+            api:"https://bird.ioliu.cn/v1?url=",
+            onoff:false,
+            timer:'',
+            songlrc:'',
+            currentTime:0,
+            songInfo:null,
+            percent:0
         }
+    },
+    created() {
+        this.initData();
     },
     methods:{
         leftIcon(){
             if(this.$refs.icon.type == "md-menu"){
-                this.onoff = !this.onoff;
+                this.leftonoff = !this.leftonoff;
             }else if(this.$refs.icon.type == "ios-arrow-back"){
                 this.$router.go(-1)
             }
+        },
+        changeIsMini(payload){
+            this.$store.commit("changeIsMini",payload)
+        },
+        initData(){
+            this.songInfo = this.getSongInfo()
+            axios("/bzq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
+                this.songlrc = data.data;
+            })
+        },
+        isPlay(){
+            if(!this.onoff){
+                this.$refs.music.play();
+                this.timer = setInterval(()=>{
+                    if(this.$refs.music.currentTime >= this.$refs.music.duration){
+                        this.onoff = false
+                    }else{
+                        this.songInfo.picurl?this.$refs.pic.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`:this.$refs.picnull.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`
+                        this.songInfo.picurl?this.$refs.picmini.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`:this.$refs.picmininull.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`
+                        this.percent = this.$refs.music.currentTime/this.$refs.music.duration*100
+                        this.currentTime = parseInt(this.$refs.music.currentTime)-2
+                    }
+                },100)
+            }else{
+                this.$refs.music.pause();
+            }
+            this.onoff = !this.onoff
+        },
+        getSongInfo(){
+            return this.$store.getters.getSongInfo
         }
+    },
+    destroyed(){
+        //clearInterval(this.timer);
     }
 }
 </script>
@@ -111,6 +191,29 @@ export default {
     }
     #navbar{
         text-align: center;
+    }
+    .mt-90{
+        margin-top:90px;
+    }
+    .songname{
+        color:#fff;
+    }
+    .icon{
+        position: relative;
+        bottom:-80px;
+    }
+    .fonticon{
+        font-size:40px;
+    }
+    .isRed{
+        color:red;
+        /* font-size:18px; */
+    }
+    #play{
+        text-align: center;
+    }
+    .active{
+        height: 100vh;
     }
 </style>
 <!--

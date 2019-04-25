@@ -18,6 +18,11 @@ router.beforeEach((to, from, next) => {
   }else{
     store.state.leftIcon = 'ios-arrow-back'
   }
+  if(to.path == '/play'){
+    store.state.IsMini = false;
+  }else{
+    store.state.IsMini = true;
+  }
   next()
 })
 new Vue({

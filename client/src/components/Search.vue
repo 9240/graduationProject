@@ -12,11 +12,9 @@
             </table>
             <table class="table table-striped" v-show="!search==''">
                 <tbody>
-                    <tr v-for="(item,index) in song" :key="index">
-                        <router-link :to="{name:'play',params:{songmid:item.songmid,songname:item.songname,index:index}}">
-                            <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname.slice(0,6)}}</td>
-                            <td class="float-right border-0">{{item.singer[0].name.slice(0.6)}}</td>
-                        </router-link>
+                    <tr v-for="(item,index) in song" :key="index" @click="setSongInfo({songmid:item.songmid,songname:item.songname,singername:item.singer[0].name,picid:item.albummid,songstate:true})">
+                        <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname.slice(0,6)}}</td>
+                        <td class="float-right border-0">{{item.singer[0].name.slice(0.6)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,13 +41,11 @@ export default {
     methods:{
         recommend(){
             axios("/proxy/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
-                //console.log(data.data.data.hotkey.slice(0,5));
                 this.hotkey = data.data.data.hotkey.slice(0,8);
             })
         },
         searchsong(){
             axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
-                //console.log(JSON.parse(data.data.slice(9,data.data.length-1)))
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })
         },
@@ -58,6 +54,10 @@ export default {
             axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })
+        },
+        setSongInfo(payload){
+            this.$store.commit("songInfoG",payload)
+            this.$store.commit("changeIsMini",false)
         }
     }
 }

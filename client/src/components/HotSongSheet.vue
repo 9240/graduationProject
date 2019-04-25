@@ -2,10 +2,8 @@
     <div>
         <Card :title="'歌单  共'+songlist.length+'首'" icon="md-headset" :padding="0" >
             <CellGroup>
-                <div v-for="(item,index) in songlist" :key="index">
-                    <router-link :to="{name:'play',params:{songmid:item.mid,songname:item.name,index:index}}">
-                        <Cell :title="item.name" :label="item.album.name" />
-                    </router-link>
+                <div v-for="(item,index) in songlist" :key="index"  @click="setSongInfo({songmid:item.mid,songname:item.name,singername:item.singer[0].name,picid:item.album.mid})">
+                    <Cell :title="item.name" :label="item.album.name" />
                 </div>
             </CellGroup>
         </Card>
@@ -49,7 +47,10 @@ export default {
         })
     },
     methods:{
-        
+        setSongInfo(payload){
+            this.$store.commit("songInfoG",payload)
+            this.$store.commit("changeIsMini",false)
+        }
     }
 }
 </script>

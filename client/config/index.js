@@ -23,7 +23,7 @@ module.exports = {
         }
       },
       "/local/":{
-        target:"http://localhost:3000",
+        target:"http://www.9240.fun:3000",
         "secure":false,
         "changeOrigin":true,
         "pathRewrite":{

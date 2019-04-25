@@ -2,11 +2,9 @@
     <div id="singlerank">
         <table class="table table-striped">
             <tbody>
-                <tr v-for="(item,index) in songlist" :key="index">
-                    <router-link :to="{name:'play',params:{songmid:item.data.songmid,songname:item.data.songname,index:index}}">
-                        <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.data.songname}}</td>
-                        <td class="float-right border-0">{{item.data.singer[0].name}}</td>
-                    </router-link>
+                <tr v-for="(item,index) in songlist" :key="index" @click="setSongInfo({songmid:item.data.songmid,songname:item.data.songname,singername:item.data.singer[0].name,picid:item.data.albummid})">
+                    <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.data.songname}}</td>
+                    <td class="float-right border-0">{{item.data.singer[0].name}}</td>
                 </tr>
             </tbody>
         </table>
@@ -28,9 +26,14 @@ export default {
     created(){
         axios("/proxy/"+this.url).then(data=>{
             this.songlist = data.data.songlist
-            //console.log(this.songlist)
         })
-    }
+    },
+    methods: {
+        setSongInfo(payload){
+            this.$store.commit("songInfoG",payload)
+            this.$store.commit("changeIsMini",false)
+        }
+    },
 }
 </script>
 
