@@ -5,7 +5,6 @@ import Rank from '@/components/Rank'
 import NavBar from '@/components/NavBar'
 import Search from '@/components/Search'
 import SingleRank from '@/components/SingleRank'
-import Play from '@/components/Play'
 import Mine from '@/components/Mine'
 import LoginRegister from '@/components/LoginRegister'
 import HotSongSheet from '@/components/HotSongSheet'
@@ -43,14 +42,6 @@ export default new Router({
       components:{
         nav:NavBar,
         default:SingleRank
-      }
-    },
-    {
-      path:'/play',
-      name:'play',
-      components:{
-        // nav:NavBar,
-        default:Play
       }
     },
     {

@@ -9,12 +9,6 @@ export const store = new Vuex.Store({
             repassword:""
         },
         songInfo:{
-            // name:"",
-            // singer:"",
-            // lrc:"",
-            // pic:"",
-            // playState:null,
-            // isMini:null,
             songmid:"",
             songname:"",
             singername:"",

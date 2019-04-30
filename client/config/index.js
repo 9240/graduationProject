@@ -33,12 +33,12 @@ module.exports = {
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"
         }
       },
-      "/bzq/":{
+      "/bzqq/":{
         target:"https://api.bzqll.com",
         "secure":true,
         "changeOrigin":true,
         "pathRewrite":{
-          "^/bzq":""
+          "^/bzqq":""
         },
         "headers":{
           "User-Agent":"Mozilla/5.0 (Linux; Android 6.0;Nexus 5 Build/MRA58N) AppleWebkit/537"

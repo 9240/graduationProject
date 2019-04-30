@@ -47,7 +47,7 @@ export default {
           if(!this.userInfo.username || !this.userInfo.password){
               this.$Message.info('请完善信息');
           }else{
-              axios.post("/local/usermsg/login",{
+              axios.post("http://www.9240.fun:3000/usermsg/login",{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })
@@ -92,7 +92,7 @@ export default {
                 content:'密码长度要大于6',
             })
         }else{
-            axios.post('/local/usermsg/register',{
+            axios.post('http://www.9240.fun:3000/usermsg/register',{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })

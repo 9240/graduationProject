@@ -76,8 +76,8 @@ export default {
         initData(){
             this.songInfo = this.getSongInfo()
             if(this.songInfo.songmid){
-                this.url = '/bzq/music/tencent/url?key=579621905&id='+this.songInfo.songmid;
-                axios("/bzq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
+                this.url = 'https://api.bzqll.com/music/tencent/url?key=579621905&id='+this.songInfo.songmid;
+                axios("https://api.bzqll.com/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
                     this.songlrc = data.data;
                 })
             }

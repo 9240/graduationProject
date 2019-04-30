@@ -53,7 +53,7 @@
                 </router-link>
             </li>
             <li class="nav-item" :class="{active:!this.$store.state.IsMini}">
-                <audio :src="'/bzq/music/tencent/url?key=579621905&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
+                <audio :src="'https://api.bzqll.com/music/tencent/url?key=579621905&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
                 <div v-show="this.$store.state.IsMini"  @click="changeIsMini(false)">
                     <i-circle :percent="percent" stroke-color="#fff700e6" trail-color="#444" :size="45">
                         <img alt="" :src="songInfo.picurl" class="rounded-circle" v-if="songInfo.picid" style="width:40px;height:40px" ref="picmini">
@@ -76,7 +76,9 @@
                         <img alt="" :src="songInfo.picurl" class="rounded-circle mt-2" v-if="songInfo.picid" style="width:240px;height:240px" ref="pic">
                         <ul class="list-group" ref="lrc">
                             <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" style="border:0;position:absolute;top:400px;left:0px;background-color:rgba(0,0,0,0);width:100vw;">
+                            <!-- <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" > -->
                                 <p v-if="((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)<=1&&((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)>=-1" :class="{isRed:(item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1)==currentTime?true:false}" style="color:red;z-index:999;" class="text-center">{{item.split(']')[1]}}</p>
+                                <!-- <p>{{item.split(']')[0]}}</p> -->
                             </li>
                         </ul>
                         <img src="http://www.kugou.com/yy/static/images/play/default.jpg" alt="" style="width:240px;height:240px" class="rounded-circle mt-2" v-if="!songInfo.picid">
@@ -151,11 +153,12 @@ export default {
         },
         initData(){
             this.songInfo = this.getSongInfo()
-            axios("/bzq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
-                this.songlrc = data.data;
-            })
-        },
+        }, 
         isPlay(){
+            axios("/bzqq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
+                this.songlrc = data.data;
+                console.log(this.songlrc)
+            })
             if(!this.onoff){
                 this.$refs.music.play();
                 this.timer = setInterval(()=>{
@@ -165,7 +168,8 @@ export default {
                         this.songInfo.picurl?this.$refs.pic.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`:this.$refs.picnull.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`
                         this.songInfo.picurl?this.$refs.picmini.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`:this.$refs.picmininull.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`
                         this.percent = this.$refs.music.currentTime/this.$refs.music.duration*100
-                        this.currentTime = parseInt(this.$refs.music.currentTime)-2
+                        this.currentTime = parseFloat(this.$refs.music.currentTime)-2
+                        console.log(this.currentTime)
                     }
                 },100)
             }else{

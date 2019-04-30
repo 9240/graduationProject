@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <keep-alive>
+        <!-- <keep-alive> -->
             <router-view name="nav"/>
-        </keep-alive>
+        <!-- </keep-alive> -->
         <keep-alive include="recommend,rank">
             <router-view class="pb-5"/>
         </keep-alive>
