@@ -29,6 +29,7 @@ export default {
         username:"",
         password:"",
         repassword:"",
+        favlist:[]
       },
       isLogin:true
     }
@@ -47,7 +48,7 @@ export default {
           if(!this.userInfo.username || !this.userInfo.password){
               this.$Message.info('请完善信息');
           }else{
-              axios.post("http://www.9240.fun:3000/usermsg/login",{
+              axios.post("/local/usermsg/login",{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })
@@ -57,6 +58,7 @@ export default {
                         duration:1,
                         content:'登陆成功',
                         onClose:()=>{
+                            this.userInfo.favlist = res.data.favlist;
                             this.$router.push({path:'/'})
                             this.$store.commit("userInfoG",this.userInfo)
                         }
@@ -92,7 +94,7 @@ export default {
                 content:'密码长度要大于6',
             })
         }else{
-            axios.post('http://www.9240.fun:3000/usermsg/register',{
+            axios.post('/local/usermsg/register',{
                 username:this.userInfo.username,
                 password:this.userInfo.password
             })

@@ -157,7 +157,6 @@ export default {
         isPlay(){
             axios("/bzqq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
                 this.songlrc = data.data;
-                console.log(this.songlrc)
             })
             if(!this.onoff){
                 this.$refs.music.play();
@@ -169,7 +168,6 @@ export default {
                         this.songInfo.picurl?this.$refs.picmini.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`:this.$refs.picmininull.style.transform = `rotateZ(${this.$refs.music.currentTime*8}deg)`
                         this.percent = this.$refs.music.currentTime/this.$refs.music.duration*100
                         this.currentTime = parseFloat(this.$refs.music.currentTime)-2
-                        console.log(this.currentTime)
                     }
                 },100)
             }else{

@@ -4,9 +4,9 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         userInfo:{
-            username:"",
-            password:"",
-            repassword:""
+            username:localStorage.getItem("username")||"",
+            password:localStorage.getItem("password")||"",
+            favlist:[]
         },
         songInfo:{
             songmid:"",
@@ -23,7 +23,9 @@ export const store = new Vuex.Store({
         userInfoG(state,payload){
             state.userInfo.username = payload.username;
             state.userInfo.password = payload.password;
-            state.userInfo.repassword = payload.repassword;
+            state.userInfo.favlist = payload.favlist
+            localStorage.setItem("username",payload.username);
+            localStorage.setItem("password",payload.password);
         },
         songInfoG(state,payload){
             state.songInfo.songmid = payload.songmid;
@@ -31,10 +33,13 @@ export const store = new Vuex.Store({
             state.songInfo.singername = payload.singername;
             state.songInfo.picid = payload.picid;
             state.songInfo.songstate = payload.songstate;
-            state.songInfo.picurl =  'https://y.gtimg.cn/music/photo_new/T002R150x150M000'+payload.picid+'.jpg'  
+            state.songInfo.picurl =  payload.picid.length==14?'https://y.gtimg.cn/music/photo_new/T002R150x150M000'+payload.picid+'.jpg':payload.picid
         },
         changeIsMini(state,payload){
             state.IsMini = payload
+        },
+        favlistG(state,payload){
+            state.userInfo.favlist.push(payload)
         }
     },
     actions:{
@@ -47,6 +52,9 @@ export const store = new Vuex.Store({
         },
         getSongInfo(state){
             return state.songInfo
+        },
+        getfavlist(state){
+            return state.userInfo.favlist;
         }
     }
 })

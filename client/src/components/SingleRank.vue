@@ -1,5 +1,15 @@
 <template>
     <div id="singlerank">
+        <div v-show="isloading">
+            <Row>
+                <Col class="demo-spin-col" span="24">
+                    <Spin fix>
+                        <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                        <div>加载中。。。</div>
+                    </Spin>
+                </Col>
+            </Row>
+        </div>
         <table class="table table-striped">
             <tbody>
                 <tr v-for="(item,index) in songlist" :key="index" @click="setSongInfo({songmid:item.data.songmid,songname:item.data.songname,singername:item.data.singer[0].name,picid:item.data.albummid})">
@@ -20,11 +30,13 @@ export default {
             api:"https://bird.ioliu.cn/v1?url=",
             id:this.$route.params.id,
             url:this.$route.params.url,
-            songlist:[]
+            songlist:[],
+            isloading:true,
         }
     },
     created(){
         axios("/proxy/"+this.url).then(data=>{
+            this.isloading = false;
             this.songlist = data.data.songlist
         })
     },
@@ -33,7 +45,7 @@ export default {
             this.$store.commit("songInfoG",payload)
             this.$store.commit("changeIsMini",false)
         }
-    },
+    }
 }
 </script>
 

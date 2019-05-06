@@ -34,7 +34,7 @@ module.exports = {
         }
       },
       "/bzqq/":{
-        target:"https://api.bzqll.com",
+        target:"https://api.itooi.cn",
         "secure":true,
         "changeOrigin":true,
         "pathRewrite":{

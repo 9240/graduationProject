@@ -2,6 +2,16 @@
     <div id="search">
         <div class="container">
             <input type="text" class="form-control mt-2" placeholder="搜索歌曲" v-model="search" v-on:input="searchsong" v-on:click="recommend">
+            <div v-show="isloading">
+                <Row>
+                    <Col class="demo-spin-col" span="24">
+                        <Spin fix>
+                            <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                            <div>加载中。。。</div>
+                        </Spin>
+                    </Col>
+                </Row>
+            </div>
             <table class="table table-striped text-primary" v-show="search==''">
                 <tbody>
                     <tr v-for="(item,index) in hotkey" :key="index" v-on:click='up(item.k)'>
@@ -32,7 +42,8 @@ export default {
             api:"https://bird.ioliu.cn/v1?url=",
             search:'',
             hotkey:[],
-            song:[]
+            song:[],
+            isloading:false
         }
     },
     created(){
@@ -40,7 +51,13 @@ export default {
     },
     methods:{
         recommend(){
+            if(this.hotkey.length == 0){
+                this.isloading = true
+            }else{
+                this.isloading = false;
+            }
             axios("/proxy/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
+                this.isloading = false
                 this.hotkey = data.data.data.hotkey.slice(0,8);
             })
         },
@@ -50,8 +67,10 @@ export default {
             })
         },
         up(item){
-            this.search = item
+            this.isloading = true;
+            this.search = item;
             axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
+                this.isloading = false;
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })
         },

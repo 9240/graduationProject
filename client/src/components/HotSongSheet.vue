@@ -1,10 +1,27 @@
 <template>
     <div>
         <Card :title="'歌单  共'+songlist.length+'首'" icon="md-headset" :padding="0" >
+            <div v-show="isloading">
+                <Row>
+                    <Col class="demo-spin-col" span="24">
+                        <Spin fix>
+                            <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                            <div>加载中。。。</div>
+                        </Spin>
+                    </Col>
+                </Row>
+            </div>
             <CellGroup>
-                <div v-for="(item,index) in songlist" :key="index"  @click="setSongInfo({songmid:item.mid,songname:item.name,singername:item.singer[0].name,picid:item.album.mid})">
-                    <Cell :title="item.name" :label="item.album.name" />
-                </div>
+                <Row v-for="(item,index) in songlist" :key="index">
+                    <Col span="21">
+                        <div @click="setSongInfo({songmid:item.mid,songname:item.name,singername:item.singer[0].name,picid:item.album.mid})">
+                            <Cell :title="item.name" :label="item.album.name"/>
+                        </div>
+                    </Col>
+                    <Col span="3">
+                        <Icon :type="favtype" style="line-height:52px;color:red;" @click="addFav(index,item.mid)" ref="fav"/>
+                    </Col>
+                </Row>
             </CellGroup>
         </Card>
     </div>
@@ -19,7 +36,9 @@ export default {
             id:this.$route.params.id,
             postData:'',
             api:"https://bird.ioliu.cn/v1?url=",
-            songlist:[]
+            songlist:[],
+            favtype:"md-heart-outline",
+            isloading:true,
         }
     },
     created(){
@@ -43,6 +62,7 @@ export default {
                 break;
         }
         axios.post('/uqq/cgi-bin/musicu.fcg?_='+new Date().getTime(),this.postData).then(res=>{
+            this.isloading = false
             this.songlist = res.data.req_0.data.tracks;
         })
     },
@@ -50,6 +70,14 @@ export default {
         setSongInfo(payload){
             this.$store.commit("songInfoG",payload)
             this.$store.commit("changeIsMini",false)
+        },
+        addFav(index,mid){
+            this.$refs.fav[index].type = "md-heart";
+            this.$store.commit("favlistG",mid)
+            axios.post("/local/usermsg/addfav",{username:this.$store.state.userInfo.username,favlist:this.$store.state.userInfo.favlist})
+            .then(res=>{
+                console.log(res)
+            })
         }
     }
 }
