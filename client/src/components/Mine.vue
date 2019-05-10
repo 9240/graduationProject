@@ -7,9 +7,9 @@
 			<h3 style="padding:10px;">收藏列表</h3>
 			<table class="table table-striped">
 				<tbody>
-					<tr v-for="(item,index) in favlist" :key="index" @click="setSongInfo({songmid:item.id,songname:item.name,singername:item.singer,picid:item.pic})">
-						<td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.name.slice(0,20)}}</td>
-						<td class="float-right border-0">{{item.singer}}</td>
+					<tr v-for="(item,index) in favlist" :key="index" @click="setSongInfo({songmid:item.mid,songname:item.name,singername:item.singer[0].name,picid:item.album.mid})">
+						<td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.name}}</td>
+						<td class="float-right border-0">{{item.singer[0].name}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -29,8 +29,8 @@ export default {
 	created(){
 		if(localStorage.getItem("username")){
 			this.$store.state.userInfo.favlist.map((item)=>{
-				axios.get("/bzqq/music/tencent/song?key=579621905&id="+item).then(res=>{
-					this.favlist.push(res.data.data)
+				axios.get("http://v1.itooi.cn/tencent/song?id="+item).then(res=>{
+					this.favlist.push(res.data.data[0])
 				})
 			})
 		}

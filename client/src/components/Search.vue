@@ -39,7 +39,6 @@ export default {
     name:'search',
     data(){
         return{
-            api:"https://bird.ioliu.cn/v1?url=",
             search:'',
             hotkey:[],
             song:[],
@@ -56,20 +55,20 @@ export default {
             }else{
                 this.isloading = false;
             }
-            axios("/proxy/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
+            axios("https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
                 this.isloading = false
                 this.hotkey = data.data.data.hotkey.slice(0,8);
             })
         },
         searchsong(){
-            axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
+            axios("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })
         },
         up(item){
             this.isloading = true;
             this.search = item;
-            axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
+            axios("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
                 this.isloading = false;
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })

@@ -61,7 +61,7 @@ export default {
             default:
                 break;
         }
-        axios.post('/uqq/cgi-bin/musicu.fcg?_='+new Date().getTime(),this.postData).then(res=>{
+        axios.post('https://u.y.qq.com/cgi-bin/musicu.fcg?_='+new Date().getTime(),this.postData).then(res=>{
             this.isloading = false
             this.songlist = res.data.req_0.data.tracks;
         })
@@ -74,7 +74,7 @@ export default {
         addFav(index,mid){
             this.$refs.fav[index].type = "md-heart";
             this.$store.commit("favlistG",mid)
-            axios.post("/local/usermsg/addfav",{username:this.$store.state.userInfo.username,favlist:this.$store.state.userInfo.favlist})
+            axios.post("http://www.9240.fun:3000/usermsg/addfav",{username:this.$store.state.userInfo.username,favlist:this.$store.state.userInfo.favlist})
             .then(res=>{
                 console.log(res)
             })

@@ -34,8 +34,8 @@ module.exports = {
         }
       },
       "/bzqq/":{
-        target:"https://api.itooi.cn",
-        "secure":true,
+        target:"http://v1.itooi.cn",
+        "secure":false,
         "changeOrigin":true,
         "pathRewrite":{
           "^/bzqq":""

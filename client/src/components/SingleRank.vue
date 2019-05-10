@@ -35,7 +35,7 @@ export default {
         }
     },
     created(){
-        axios("/proxy/"+this.url).then(data=>{
+        axios("https://c.y.qq.com/"+this.url).then(data=>{
             this.isloading = false;
             this.songlist = data.data.songlist
         })

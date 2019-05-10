@@ -49,7 +49,7 @@ export default {
         }
     },
     created(){
-        axios("/proxy/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg").then(data=>{
+        axios("https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg").then(data=>{
             //console.log(data.data);
             for (let index in data.data.data.slider){
                 this.img.push(data.data.data.slider[index].picUrl)

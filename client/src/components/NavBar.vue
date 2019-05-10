@@ -53,7 +53,9 @@
                 </router-link>
             </li>
             <li class="nav-item" :class="{active:!this.$store.state.IsMini}">
-                <audio :src="'https://api.bzqll.com/music/tencent/url?key=579621905&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
+                <!-- https://api.itooi.cn/music/tencent/url?key=579621905&id=001fXNWa3t8EQQ&br=192 -->
+                <audio :src="'http://v1.itooi.cn/tencent/url?quality=128&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
+                <!-- <audio src="https://api.itooi.cn/music/tencent/url?id=0015Fszs0HWl2g&key=579621905" v-show="songInfo.songmid" ref="music" controls></audio> -->
                 <div v-show="this.$store.state.IsMini"  @click="changeIsMini(false)">
                     <i-circle :percent="percent" stroke-color="#fff700e6" trail-color="#444" :size="45">
                         <img alt="" :src="songInfo.picurl" class="rounded-circle" v-if="songInfo.picid" style="width:40px;height:40px" ref="picmini">
@@ -128,7 +130,6 @@ export default {
         return{
             leftonoff: false,
             isShowNav:true,
-            api:"https://bird.ioliu.cn/v1?url=",
             onoff:false,
             timer:'',
             songlrc:'',
@@ -155,11 +156,11 @@ export default {
             this.songInfo = this.getSongInfo()
         }, 
         isPlay(){
-            axios("/bzqq/music/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
+            axios("http://v1.itooi.cn/tencent/lrc?&id="+this.songInfo.songmid).then(data=>{
                 this.songlrc = data.data;
             })
             if(!this.onoff){
-                this.$refs.music.play();
+                this.$refs.music.play()
                 this.timer = setInterval(()=>{
                     if(this.$refs.music.currentTime >= this.$refs.music.duration){
                         this.onoff = false
@@ -178,9 +179,6 @@ export default {
         getSongInfo(){
             return this.$store.getters.getSongInfo
         }
-    },
-    destroyed(){
-        //clearInterval(this.timer);
     }
 }
 </script>
@@ -218,9 +216,3 @@ export default {
         height: 100vh;
     }
 </style>
-<!--
-
-<Icon type="ios-pause" />
-<Icon type="ios-play" />
-
--->
