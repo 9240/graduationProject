@@ -13,8 +13,8 @@
         <table class="table table-striped">
             <tbody>
                 <tr v-for="(item,index) in songlist" :key="index" @click="setSongInfo({songmid:item.data.songmid,songname:item.data.songname,singername:item.data.singer[0].name,picid:item.data.albummid})">
-                    <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.data.songname}}</td>
-                    <td class="float-right border-0">{{item.data.singer[0].name}}</td>
+                    <td class="border-0"><span class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.data.songname}}</span></td>
+                    <td class="border-0"><span class="float-right">{{item.data.singer[0].name}}</span></td>
                 </tr>
             </tbody>
         </table>
@@ -35,7 +35,7 @@ export default {
         }
     },
     created(){
-        axios("https://c.y.qq.com/"+this.url).then(data=>{
+        axios("/proxy/"+this.url).then(data=>{
             this.isloading = false;
             this.songlist = data.data.songlist
         })

@@ -5,7 +5,7 @@
                 <Icon :type="$store.state.leftIcon" class="pl-2 h6" ref="icon"/>
             </div>
             <!-- 左侧返回 -->
-			<Drawer :closable="false" width="60" v-model="leftonoff" placement="left">
+			<Drawer :closable="false" width="50" v-model="leftonoff" placement="left">
 				<Row class="mt-5">
 					<Col span="8">
 						<Avatar style="background-color: #87d068" icon="ios-person"/>
@@ -28,7 +28,7 @@
                 <h5 class="">9240音乐</h5>
             </div>
             <div class="col-2">
-                <Icon type="md-add" class="pr-2 h6"/>
+                <Icon type="ios-log-out" class="pr-2 h6" @click="logout"/>
             </div>
         </div>
         <ul class="nav nav-tabs justify-content-around fixed-bottom bg-light p-2">
@@ -53,9 +53,7 @@
                 </router-link>
             </li>
             <li class="nav-item" :class="{active:!this.$store.state.IsMini}">
-                <!-- https://api.itooi.cn/music/tencent/url?key=579621905&id=001fXNWa3t8EQQ&br=192 -->
-                <audio :src="'http://v1.itooi.cn/tencent/url?quality=128&id='+this.songInfo.songmid" v-show="songInfo.songmid" ref="music"></audio>
-                <!-- <audio src="https://api.itooi.cn/music/tencent/url?id=0015Fszs0HWl2g&key=579621905" v-show="songInfo.songmid" ref="music" controls></audio> -->
+                
                 <div v-show="this.$store.state.IsMini"  @click="changeIsMini(false)">
                     <i-circle :percent="percent" stroke-color="#fff700e6" trail-color="#444" :size="45">
                         <img alt="" :src="songInfo.picurl" class="rounded-circle" v-if="songInfo.picid" style="width:40px;height:40px" ref="picmini">
@@ -63,6 +61,9 @@
                     </i-circle>
                 </div>
                 <div v-show="!this.$store.state.IsMini">
+                    <div class="fixed-bottom" style="width:100vw;height:100px;">
+                        <audio :src="'https://v1.itooi.cn/tencent/url?quality=128&id='+this.songInfo.songmid+'&br=192'" v-show="songInfo.songmid" ref="music" class="musiccon" controls></audio>
+                    </div>
                     <div id="play" style="height:70vh;">
                         <div class="row fixed-top p-3">
                             <div class="col-2">
@@ -75,26 +76,14 @@
                         </div>
                         <h4 class="songname mt-90">{{songInfo.songname}}</h4>
                         <p class="songname">{{songInfo.singername}}</p>
-                        <img alt="" :src="songInfo.picurl" class="rounded-circle mt-2" v-if="songInfo.picid" style="width:240px;height:240px" ref="pic">
+                        <img alt="" :src="songInfo.picurl" class="rounded-circle mt-2" v-if="songInfo.picid" style="width:240px;height:240px" ref="pic" v-on:click="isPlay">
                         <ul class="list-group" ref="lrc">
-                            <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" style="border:0;position:absolute;top:400px;left:0px;background-color:rgba(0,0,0,0);width:100vw;">
-                            <!-- <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" > -->
+                            <li v-for="(item,index) in songlrc.split('[')" :key="index" class="list-group-item" style="border:0;position:absolute;top:420px;left:0px;background-color:rgba(0,0,0,0);width:100vw;">
                                 <p v-if="((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)<=1&&((item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1) - currentTime)>=-1" :class="{isRed:(item.split(']')[0].split('.')[0].split(':')[0]*60+item.split(']')[0].split('.')[0].split(':')[1]*1-1)==currentTime?true:false}" style="color:red;z-index:999;" class="text-center">{{item.split(']')[1]}}</p>
-                                <!-- <p>{{item.split(']')[0]}}</p> -->
                             </li>
                         </ul>
                         <img src="http://www.kugou.com/yy/static/images/play/default.jpg" alt="" style="width:240px;height:240px" class="rounded-circle mt-2" v-if="!songInfo.picid">
                         <h2 v-show="!songInfo.songmid">抱歉,你找的歌曲不存在</h2>
-                        <div class="icon">
-                            <Row>
-                                <Col :span="12">
-                                    <Icon :type="onoff?'ios-pause':'ios-play'" class="fonticon" v-on:click="isPlay" ref="songState"/>
-                                </Col>
-                                <Col :span="12">
-                                    <Icon type="md-arrow-down" class="fonticon"/>
-                                </Col>
-                            </Row>
-                        </div>
                     </div>
                 </div>
             </li>
@@ -156,7 +145,7 @@ export default {
             this.songInfo = this.getSongInfo()
         }, 
         isPlay(){
-            axios("http://v1.itooi.cn/tencent/lrc?&id="+this.songInfo.songmid).then(data=>{
+            axios("/bzqq/tencent/lrc?key=579621905&id="+this.songInfo.songmid).then(data=>{
                 this.songlrc = data.data;
             })
             if(!this.onoff){
@@ -178,6 +167,10 @@ export default {
         },
         getSongInfo(){
             return this.$store.getters.getSongInfo
+        },
+        logout(){
+            localStorage.clear();
+            this.$router.push({path:'/LoginRegister'})
         }
     }
 }
@@ -214,5 +207,8 @@ export default {
     }
     .active{
         height: 100vh;
+    }
+    .musiccon{
+        margin:-20px auto;
     }
 </style>

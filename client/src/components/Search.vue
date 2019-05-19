@@ -15,16 +15,16 @@
             <table class="table table-striped text-primary" v-show="search==''">
                 <tbody>
                     <tr v-for="(item,index) in hotkey" :key="index" v-on:click='up(item.k)'>
-                        <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.k}}</td>
-                        <td class="float-right border-0">{{item.n/10000}}万</td>
+                        <td class="border-0"><span class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.k}}</span></td>
+                        <td class="border-0"><span class="float-right">{{item.n/10000}}万</span></td>
                     </tr>
                 </tbody>
             </table>
             <table class="table table-striped" v-show="!search==''">
                 <tbody>
                     <tr v-for="(item,index) in song" :key="index" @click="setSongInfo({songmid:item.songmid,songname:item.songname,singername:item.singer[0].name,picid:item.albummid,songstate:true})">
-                        <td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname.slice(0,6)}}</td>
-                        <td class="float-right border-0">{{item.singer[0].name.slice(0.6)}}</td>
+                        <td class="border-0"><span class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.songname.slice(0,6)}}</span></td>
+                        <td class="border-0"><span class="float-right">{{item.singer[0].name.slice(0.6)}}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,20 +55,20 @@ export default {
             }else{
                 this.isloading = false;
             }
-            axios("https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
+            axios("/proxy/splcloud/fcgi-bin/gethotkey.fcg").then(data=>{
                 this.isloading = false
                 this.hotkey = data.data.data.hotkey.slice(0,8);
             })
         },
         searchsong(){
-            axios("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
+            axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })
         },
         up(item){
             this.isloading = true;
             this.search = item;
-            axios("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
+            axios("/proxy/soso/fcgi-bin/client_search_cp?catZhida=1&w="+this.search).then(data=>{
                 this.isloading = false;
                 this.song = JSON.parse(data.data.slice(9,data.data.length-1)).data.song.list
             })

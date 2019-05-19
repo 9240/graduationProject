@@ -6,7 +6,7 @@ export const store = new Vuex.Store({
         userInfo:{
             username:localStorage.getItem("username")||"",
             password:localStorage.getItem("password")||"",
-            favlist:[]
+            favlist:localStorage.getItem("favlist")?localStorage.getItem("favlist").split(","):[]
         },
         songInfo:{
             songmid:"",
@@ -26,6 +26,7 @@ export const store = new Vuex.Store({
             state.userInfo.favlist = payload.favlist
             localStorage.setItem("username",payload.username);
             localStorage.setItem("password",payload.password);
+            localStorage.setItem("favlist",payload.favlist);
         },
         songInfoG(state,payload){
             state.songInfo.songmid = payload.songmid;

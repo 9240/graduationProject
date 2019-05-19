@@ -35,7 +35,6 @@ export default {
         return{
             id:this.$route.params.id,
             postData:'',
-            api:"https://bird.ioliu.cn/v1?url=",
             songlist:[],
             favtype:"md-heart-outline",
             isloading:true,
@@ -61,10 +60,16 @@ export default {
             default:
                 break;
         }
-        axios.post('https://u.y.qq.com/cgi-bin/musicu.fcg?_='+new Date().getTime(),this.postData).then(res=>{
+        axios.post('/uqq/cgi-bin/musicu.fcg?_='+new Date().getTime(),this.postData).then(res=>{
             this.isloading = false
             this.songlist = res.data.req_0.data.tracks;
         })
+    },
+    mounted(){
+        this.$Message.config({
+            top: 200,
+            duration: 3
+        });
     },
     methods:{
         setSongInfo(payload){
@@ -72,12 +77,38 @@ export default {
             this.$store.commit("changeIsMini",false)
         },
         addFav(index,mid){
-            this.$refs.fav[index].type = "md-heart";
-            this.$store.commit("favlistG",mid)
-            axios.post("http://www.9240.fun:3000/usermsg/addfav",{username:this.$store.state.userInfo.username,favlist:this.$store.state.userInfo.favlist})
-            .then(res=>{
-                console.log(res)
-            })
+            if(localStorage.getItem("username")){
+                if(this.$store.state.userInfo.favlist.some(function(item){return item == mid})){
+                    this.$Message.success({
+                        duration:1,
+                        content:'已收藏',
+                    })
+                }else{
+                    this.$refs.fav[index].type = "md-heart";
+                        this.$store.commit("favlistG",mid)
+                        axios.post("/local/usermsg/addfav",{username:this.$store.state.userInfo.username,favlist:this.$store.state.userInfo.favlist})
+                        .then(res=>{
+                            if(res.data.code == 200){
+                                this.$Message.success({
+                                    duration:1,
+                                    content:'收藏成功',
+                                })
+                                axios.get("/local/usermsg/getfav?username="+localStorage.getItem("username"))
+                                .then(res=>{
+                                    localStorage.setItem("favlist",res.data.favlist)
+                                })
+                            }
+                    })
+                }
+            }else{
+                this.$Message.success({
+                    duration:1,
+                    content:'你还未登陆',
+                    onClose:()=>{
+                        this.$router.push({path:'/loginregister'})
+                    }
+                })
+            }
         }
     }
 }

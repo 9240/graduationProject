@@ -5,11 +5,21 @@
 		</template>
 		<template v-else>
 			<h3 style="padding:10px;">收藏列表</h3>
+			<div v-show="isloading">
+                <Row>
+                    <Col class="demo-spin-col" span="24">
+                        <Spin fix>
+                            <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                            <div>加载中。。。</div>
+                        </Spin>
+                    </Col>
+                </Row>
+            </div>
 			<table class="table table-striped">
 				<tbody>
 					<tr v-for="(item,index) in favlist" :key="index" @click="setSongInfo({songmid:item.mid,songname:item.name,singername:item.singer[0].name,picid:item.album.mid})">
-						<td class="float-left border-0"><span class="text-danger pr-2">{{index+1}}</span>{{item.name}}</td>
-						<td class="float-right border-0">{{item.singer[0].name}}</td>
+						<td class="border-0"><span class="float-left"><span class="text-danger pr-2">{{index+1}}</span>{{item.name.slice(0,20)}}</span></td>
+						<td class="border-0"><span class="float-right">{{item.singer[0].name}}</span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -23,14 +33,19 @@ export default {
 	name: 'mine',
 	data(){
         return{
-            favlist:[]
+			favlist:[],
+			isloading:true,
         }
     },
 	created(){
 		if(localStorage.getItem("username")){
-			this.$store.state.userInfo.favlist.map((item)=>{
-				axios.get("http://v1.itooi.cn/tencent/song?id="+item).then(res=>{
-					this.favlist.push(res.data.data[0])
+			axios.get("/local/usermsg/getfav?username="+localStorage.getItem("username"))
+			.then(res=>{
+				this.isloading = false
+				res.data.favlist.map(item=>{
+					axios.get("/bzqq/tencent/song?id="+item).then(res=>{
+						this.favlist.push(res.data.data[0])
+					})
 				})
 			})
 		}
